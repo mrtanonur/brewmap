@@ -22,6 +22,15 @@ android {
         jvmTarget = JavaVersion.VERSION_11.toString()
     }
 
+    // ✅ Load .env file from project root
+    val dotenvFile = rootProject.file(".env")
+    val dotenvProps = Properties()
+    if (dotenvFile.exists()) {
+        dotenvFile.inputStream().use { dotenvProps.load(it) }
+    }
+    val googleMapsApiKey = dotenvProps.getProperty("GOOGLE_MAPS") ?: ""
+
+
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId = "com.example.brewmap"
@@ -31,7 +40,7 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
-        manifestPlaceholders["GOOGLE_MAPS"] = "AIzaSyDJZTevBLEIjT_HhUNJqrAq-j4e8TpVATk"
+        manifestPlaceholders["GOOGLE_MAPS"] = googleMapsApiKey
 
     }
 
