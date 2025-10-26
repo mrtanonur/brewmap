@@ -1,6 +1,8 @@
 ☕ About
 
-BrewMap is a Flutter-based mobile application designed for coffee enthusiasts who want to explore nearby cafés with ease. Whether you're looking for your next favorite coffee spot or need directions to a café, BrewMap makes the journey seamless and intuitive.✨ Key Features
+BrewMap is a Flutter-based mobile application designed for coffee enthusiasts who want to explore nearby cafés with ease. Whether you're looking for your next favorite coffee spot or need directions to a café, BrewMap makes the journey seamless and intuitive.
+
+✨ Key Features
 
 🗺️ Interactive Map Exploration - Discover cafés near your current location with real-time mapping
 
