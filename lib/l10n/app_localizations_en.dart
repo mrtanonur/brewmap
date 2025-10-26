@@ -127,4 +127,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get emailVerification => 'Email Verification';
+
+  @override
+  String get noFavoritesYet => 'No favorites yet';
 }

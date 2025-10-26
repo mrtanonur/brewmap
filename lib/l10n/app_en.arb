@@ -37,5 +37,6 @@
     "ifYouHaventReceivedOne": "If you haven't received one, press the send verification link button below.",
     "getDirections": "Get directions",
     "sendAgain": "Send again",
-    "emailVerification": "Email Verification"
+    "emailVerification": "Email Verification",
+    "noFavoritesYet": "No favorites yet"
 }

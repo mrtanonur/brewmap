@@ -331,6 +331,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Email Verification'**
   String get emailVerification;
+
+  /// No description provided for @noFavoritesYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No favorites yet'**
+  String get noFavoritesYet;
 }
 
 class _AppLocalizationsDelegate

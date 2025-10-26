@@ -127,4 +127,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get emailVerification => 'E-posta Doğrulama';
+
+  @override
+  String get noFavoritesYet => 'Henüz beğenilen yok';
 }

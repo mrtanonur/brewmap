@@ -37,5 +37,6 @@
     "ifYouHaventReceivedOne": "Eğer almadıysanız, aşağıdaki doğrulama bağlantısını gönder butonuna basın.",
     "getDirections": "Yol tarifi al",
     "sendAgain": "Tekrar gönder",
-    "emailVerification": "E-posta Doğrulama"
+    "emailVerification": "E-posta Doğrulama",
+    "noFavoritesYet": "Henüz beğenilen yok"
 }
