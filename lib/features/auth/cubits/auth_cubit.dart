@@ -13,7 +13,6 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future authCheck() async {
     final response = await _repository.authCheck();
-    print(response);
     if (response) {
       emit(state.copyWith(status: AuthStatus.userExists));
     } else {
@@ -25,7 +24,7 @@ class AuthCubit extends Cubit<AuthState> {
     final response = await _repository.signUp(email, password);
     response.fold(
       (String failureMessage) {
-        emit(state.copyWith(error: failureMessage));
+        emit(state.copyWith(error: failureMessage, status: AuthStatus.failure));
       },
       (UserModel userModel) {
         emit(
@@ -41,7 +40,7 @@ class AuthCubit extends Cubit<AuthState> {
   Future storeUserData() async {
     final response = await _repository.storeUserData(state.userData!);
     response.fold((String failureMessage) {
-      emit(state.copyWith(error: failureMessage));
+      emit(state.copyWith(error: failureMessage, status: AuthStatus.failure));
     }, (_) {});
   }
 
@@ -50,7 +49,7 @@ class AuthCubit extends Cubit<AuthState> {
 
     response.fold(
       (String failureMessage) {
-        emit(state.copyWith(error: failureMessage));
+        emit(state.copyWith(error: failureMessage, status: AuthStatus.failure));
       },
       (_) {
         emit(state.copyWith(status: AuthStatus.verificationProcess));
@@ -62,11 +61,12 @@ class AuthCubit extends Cubit<AuthState> {
     final response = await _repository.signIn(email, password);
     response.fold(
       (String failureMessage) {
-        emit(state.copyWith(error: failureMessage));
+        emit(state.copyWith(error: failureMessage, status: AuthStatus.failure));
       },
       (User? user) {
         if (user != null) {
           if (user.emailVerified) {
+            // getUserData();
             emit(state.copyWith(status: AuthStatus.signIn));
           } else {
             emit(state.copyWith(status: AuthStatus.unVerified));
@@ -83,7 +83,7 @@ class AuthCubit extends Cubit<AuthState> {
 
     response.fold(
       (String failureMessage) {
-        emit(state.copyWith(error: failureMessage));
+        emit(state.copyWith(error: failureMessage, status: AuthStatus.failure));
       },
       (UserModel userModel) {
         emit(state.copyWith(userData: userModel));
@@ -95,7 +95,7 @@ class AuthCubit extends Cubit<AuthState> {
     final response = await _repository.resetPassword(email);
     response.fold(
       (String failureMessage) {
-        emit(state.copyWith(error: failureMessage));
+        emit(state.copyWith(error: failureMessage, status: AuthStatus.failure));
       },
       (_) {
         emit(state.copyWith(status: AuthStatus.resetPassword));
@@ -107,7 +107,7 @@ class AuthCubit extends Cubit<AuthState> {
     final response = await _repository.signOut();
     response.fold(
       (String failureMessage) {
-        emit(state.copyWith(error: failureMessage));
+        emit(state.copyWith(error: failureMessage, status: AuthStatus.failure));
       },
       (_) {
         emit(state.copyWith(status: AuthStatus.signOut));

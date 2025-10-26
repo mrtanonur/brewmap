@@ -1,5 +1,5 @@
-import 'package:brewmap/core/utils/widgets/brewmap_button.dart';
-import 'package:brewmap/core/utils/widgets/brewmap_textformfield.dart';
+import 'package:brewmap/core/widgets/brewmap_button.dart';
+import 'package:brewmap/core/widgets/brewmap_textformfield.dart';
 import 'package:brewmap/features/auth/cubits/auth_cubit.dart';
 import 'package:brewmap/features/auth/presentation/pages/email_verification_page.dart';
 import 'package:brewmap/features/auth/presentation/pages/sign_in_page.dart';
@@ -22,12 +22,12 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
-        AuthCubit authCubit = context.read<AuthCubit>();
         if (state.status == AuthStatus.verificationProcess) {
-          authCubit.storeUserData();
-          Navigator.pushReplacement(
+          context.read<AuthCubit>().storeUserData();
+          Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => EmailVerificationPage()),
+            (route) => false,
           );
         } else if (state.status == AuthStatus.failure) {
           ScaffoldMessenger.of(context).showSnackBar(

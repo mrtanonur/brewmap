@@ -1,6 +1,6 @@
-import 'package:brewmap/core/utils/widgets/brewmap_app_bar.dart';
-import 'package:brewmap/core/utils/widgets/brewmap_button.dart';
-import 'package:brewmap/core/utils/widgets/brewmap_textformfield.dart';
+import 'package:brewmap/core/widgets/brewmap_app_bar.dart';
+import 'package:brewmap/core/widgets/brewmap_button.dart';
+import 'package:brewmap/core/widgets/brewmap_textformfield.dart';
 import 'package:brewmap/features/auth/cubits/auth_cubit.dart';
 import 'package:brewmap/features/auth/presentation/pages/sign_in_page.dart';
 import 'package:brewmap/l10n/app_localizations.dart';
@@ -63,9 +63,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 SizedBox(height: SizeConstants.s36),
                 TextButton(
                   onPressed: () {
-                    Navigator.pushReplacement(
+                    Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(builder: (context) => SignInPage()),
+                      (route) => false,
                     );
                   },
                   child: Text(AppLocalizations.of(context)!.goToSignInPage),

@@ -1,6 +1,6 @@
 import 'package:brewmap/core/pages/main_page.dart';
-import 'package:brewmap/core/utils/widgets/brewmap_button.dart';
-import 'package:brewmap/core/utils/widgets/brewmap_textformfield.dart';
+import 'package:brewmap/core/widgets/brewmap_button.dart';
+import 'package:brewmap/core/widgets/brewmap_textformfield.dart';
 import 'package:brewmap/features/auth/cubits/auth_cubit.dart';
 import 'package:brewmap/features/auth/presentation/pages/forgot_password_page.dart';
 import 'package:brewmap/features/auth/presentation/pages/sign_up_page.dart';
@@ -19,48 +19,12 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
-  AuthCubit? _authCubit;
-
-  @override
-  void initState() {
-    super.initState();
-    // _authCubit = context.read<AuthCubit>();
-    // _authCubit!.addListener(authListener);
-  }
-
-  @override
-  void dispose() {
-    // _authCubit!.removeListener(authListener);
-    super.dispose();
-  }
-
-  void authListener() {
-    // final status = context.read<AuthCubit>().status;
-    // if (status == AuthStatus.failure) {
-    //   ScaffoldMessenger.of(
-    //     context,
-    //   ).showSnackBar(SnackBar(content: Text(_authCubit!.error!)));
-    // } else if (status == AuthStatus.signIn) {
-    //   _authCubit!.getUserData();
-    //   Navigator.pushReplacement(
-    //     context,
-    //     MaterialPageRoute(builder: (context) => HomeView()),
-    //   );
-    // } else if (status == AuthStatus.unVerified) {
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     SnackBar(
-    //       content: Text(AppLocalizations.of(context)!.pleaseVerifyYourEmail),
-    //     ),
-    //   );
-    // }
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AuthState>(
-      listener: (context, state) async {
-        AuthCubit authCubit = context.read<AuthCubit>();
-        if (authCubit.state.status == AuthStatus.unVerified) {
+      listenWhen: (previous, current) => previous.status != current.status,
+      listener: (context, state) {
+        if (state.status == AuthStatus.unVerified) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(
@@ -68,13 +32,14 @@ class _SignInPageState extends State<SignInPage> {
               ),
             ),
           );
-        } else if (authCubit.state.status == AuthStatus.signIn) {
-          await authCubit.getUserData();
-          Navigator.pushReplacement(
+        } else if (state.status == AuthStatus.signIn) {
+          context.read<AuthCubit>().getUserData();
+          Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => MainPage()),
+            (route) => false,
           );
-        } else if (authCubit.state.status == AuthStatus.failure) {
+        } else if (state.status == AuthStatus.failure) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(AppLocalizations.of(context)!.somethingWentWrong),
@@ -203,11 +168,12 @@ class _SignInFormState extends State<SignInForm> {
               children: [
                 TextButton(
                   onPressed: () {
-                    Navigator.pushReplacement(
+                    Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
                         builder: (context) => ForgotPasswordPage(),
                       ),
+                      (route) => false,
                     );
                   },
                   child: Text(AppLocalizations.of(context)!.forgotPassword),

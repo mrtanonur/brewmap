@@ -37,7 +37,6 @@ class AuthRepository {
           email: userCredential.user!.email!,
           signInMethod: userCredential.credential?.signInMethod,
         );
-        print(userModel.id);
         return Right(userModel);
       },
     );
@@ -59,7 +58,15 @@ class AuthRepository {
   }
 
   Future<Either<String, void>> sendEmailVerificationLink() async {
-    return await _authRemoteDataProvider.sendEmailVerificationLink();
+    final response = await _authRemoteDataProvider.sendEmailVerificationLink();
+    return response.fold(
+      (String failure) {
+        return Left(failure);
+      },
+      (_) {
+        return Right(null);
+      },
+    );
   }
 
   Future<Either<String, User>> signIn(String email, String password) async {
@@ -88,10 +95,26 @@ class AuthRepository {
   }
 
   Future<Either<String, void>> resetPassword(String email) async {
-    return await _authRemoteDataProvider.resetPassword(email);
+    final response = await _authRemoteDataProvider.resetPassword(email);
+    return response.fold(
+      (String failure) {
+        return Left(failure);
+      },
+      (_) {
+        return Right(null);
+      },
+    );
   }
 
   Future<Either<String, void>> signOut() async {
-    return await _authRemoteDataProvider.signOut();
+    final response = await _authRemoteDataProvider.signOut();
+    return response.fold(
+      (String failure) {
+        return Left(failure);
+      },
+      (_) {
+        return Right(null);
+      },
+    );
   }
 }

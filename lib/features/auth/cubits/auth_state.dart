@@ -27,7 +27,7 @@ class AuthState extends Equatable {
   }
 
   factory AuthState.initial() {
-    return AuthState();
+    return AuthState(status: AuthStatus.initial);
   }
 
   @override
