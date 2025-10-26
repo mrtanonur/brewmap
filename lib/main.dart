@@ -4,6 +4,8 @@ import 'package:brewmap/core/utils/themes/dark_theme.dart';
 import 'package:brewmap/core/utils/themes/light_theme.dart';
 import 'package:brewmap/dependency_injection.dart';
 import 'package:brewmap/features/auth/cubits/auth_cubit.dart';
+import 'package:brewmap/features/favorites/cubits/favorite_cubit.dart';
+import 'package:brewmap/features/maps/cubits/maps_cubit.dart';
 import 'package:brewmap/features/settings/cubits/settings_cubit.dart';
 import 'package:brewmap/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +19,8 @@ void main() async {
         BlocProvider.value(value: sl.get<MainCubit>()),
         BlocProvider.value(value: sl.get<SettingsCubit>()),
         BlocProvider.value(value: sl.get<AuthCubit>()),
+        BlocProvider.value(value: sl.get<FavoriteCubit>()),
+        BlocProvider.value(value: sl.get<MapsCubit>()),
       ],
       child: const MainApp(),
     ),
